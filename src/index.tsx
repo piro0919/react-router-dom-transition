@@ -122,8 +122,8 @@ class Switch extends React.Component<SwitchProps, any> {
               currentDom: this.state.nextDom,
               nextDom: null
             });
-          }, duration === undefined ? 1000 : duration);
-        }, 0); // TODO: なんとかしたい
+          }, 1000);
+        }, 50); // TODO: なんとかしたい
       }
     );
 
