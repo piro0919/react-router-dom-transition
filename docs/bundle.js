@@ -951,7 +951,7 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Re
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nvar ReactDOM = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\nvar react_router_dom_1 = __webpack_require__(/*! react-router-dom */ \"./node_modules/react-router-dom/es/index.js\");\nvar App_1 = __webpack_require__(/*! ./App */ \"./public/App.tsx\");\nReactDOM.render(React.createElement(react_router_dom_1.BrowserRouter, null,\n    React.createElement(react_router_dom_1.Route, { component: App_1.default, path: \"/\" })), document.getElementById('app'));\n\n\n//# sourceURL=webpack:///./public/index.tsx?");
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nvar ReactDOM = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\nvar react_router_dom_1 = __webpack_require__(/*! react-router-dom */ \"./node_modules/react-router-dom/es/index.js\");\nvar App_1 = __webpack_require__(/*! ./App */ \"./public/App.tsx\");\nconsole.log(\"development\");\nReactDOM.render(React.createElement(react_router_dom_1.BrowserRouter, { basename:  true\n        ? ''\n        : undefined },\n    React.createElement(react_router_dom_1.Route, { component: App_1.default, path: \"/\" })), document.getElementById('app'));\n\n\n//# sourceURL=webpack:///./public/index.tsx?");
 
 /***/ }),
 
