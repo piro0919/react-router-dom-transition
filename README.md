@@ -75,11 +75,11 @@
 // ↓ at PUSH or POP
 <BrowserRouter>
   <div className={`transition-switch ${className}`}>
-    /* className added is push or pop */
+    /* className added is push or pop */
     <div className="next push">
       <Profile />
     </div>
-    /* className added is push or pop */
+    /* className added is push or pop */
     <div className="current push">
       <Top />
     </div>

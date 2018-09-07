@@ -1,5 +1,5 @@
 .babelrc
-build
+docs
 public
 src
 tsconfig.json
