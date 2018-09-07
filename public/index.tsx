@@ -3,8 +3,6 @@ import * as ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
 import App from './App';
 
-console.log(process.env.NODE_ENV);
-
 ReactDOM.render(
   <BrowserRouter
     basename={
