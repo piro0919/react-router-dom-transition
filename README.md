@@ -50,28 +50,30 @@ render() {
 ```
 .transition-switch {
   > .current {
+    top: 0;
+
     &.push.do {
-      transform: translateY(-100%);
+      top: -100%;
     }
 
     &.pop.do {
-      transform: translateY(100%);
+      top: 100%;
     }
   }
 
   > .next {
     &.push {
-      transform: translateY(100%);
+      top: 100%;
     }
 
     &.pop {
-      transform: translateY(-100%);
+      top: -100%;
     }
 
     &.push,
     &.pop {
       &.do {
-        transform: translateY(0);
+        top: 0;
       }
     }
   }

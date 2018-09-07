@@ -46,28 +46,30 @@ const Dl = styled.dl`
 
     &.vertical-slide .transition-switch {
       > .current {
+        top: 0;
+
         &.push.do {
-          transform: translateY(-100%);
+          top: -100%;
         }
 
         &.pop.do {
-          transform: translateY(100%);
+          top: 100%;
         }
       }
 
       > .next {
         &.push {
-          transform: translateY(100%);
+          top: 100%;
         }
 
         &.pop {
-          transform: translateY(-100%);
+          top: -100%;
         }
 
         &.push,
         &.pop {
           &.do {
-            transform: translateY(0);
+            top: 0;
           }
         }
       }
@@ -75,28 +77,30 @@ const Dl = styled.dl`
 
     &.horizontal-slide .transition-switch {
       > .current {
+        left: 0;
+
         &.push.do {
-          transform: translateX(-100%);
+          left: -100%;
         }
 
         &.pop.do {
-          transform: translateX(100%);
+          left: 100%;
         }
       }
 
       > .next {
         &.push {
-          transform: translateX(100%);
+          left: 100%;
         }
 
         &.pop {
-          transform: translateX(-100%);
+          left: -100%;
         }
 
         &.push,
         &.pop {
           &.do {
-            transform: translateX(0);
+            left: 0;
           }
         }
       }
