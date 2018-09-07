@@ -2,7 +2,7 @@
 
 [`react-router-dom-transition`](https://www.npmjs.com/package/react-router-dom-transition) uses [`react-router-dom`](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom) to enable transition.
 
-## install
+## install (include typescript by default)
 
 `npm i --save react-router-dom-transition`
 
