@@ -1,12 +1,35 @@
 # react-router-dom-transition
 
-`react-router-dom-transition` uses `react-router-dom` to enable transition.
+[`react-router-dom-transition`](https://www.npmjs.com/package/react-router-dom-transition) uses [`react-router-dom`](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom) to enable transition.
 
-## exapmle
+## install
+
+`npm i --save react-router-dom-transition`
+
+## usage
+
+```
+import { BrowserRouter, Route } from 'react-router-dom';
+import TransitionSwitch from 'react-router-dom-transition';
+
+render() {
+  return (
+    <BrowserRouter>
+      /* replace with Switch of react-router-dom */
+      <TransitionSwitch duration={300}>
+        <Route component="Top" path="/">
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/about" component={About} />
+      </TransitionSwitch>
+    </BrowserRouter>
+  );
+}
+
+```
+
+## example
 
 [react-router-dom-transition](https://piro0919.github.io/react-router-dom-transition/)
-
-If you make a good transition, please contact me.
 
 ## props
 
@@ -26,32 +49,29 @@ If you make a good transition, please contact me.
 ## style example
 ```
 .transition-switch {
-  .current {
-    top: 0;
-
+  > .current {
     &.push.do {
-      top: -100%;
+      transform: translateY(-100%);
     }
 
     &.pop.do {
-      top: 100%;
+      transform: translateY(100%);
     }
   }
 
-  .next {
+  > .next {
     &.push {
-      top: 100%;
-
-      &.do {
-        top: 0;
-      }
+      transform: translateY(100%);
     }
 
     &.pop {
-      top: -100%;
+      transform: translateY(-100%);
+    }
 
+    &.push,
+    &.pop {
       &.do {
-        top: 0;
+        transform: translateY(0);
       }
     }
   }
