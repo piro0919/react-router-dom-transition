@@ -1,16 +1,15 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import {
   match,
   matchPath,
   RouteComponentProps,
   withRouter
 } from 'react-router-dom';
-import * as $ from 'jquery';
 import styled from 'styled-components';
 
 export interface SwitchProps extends RouteComponentProps<any> {
   children: React.ReactNode;
+  className?: string;
   duration?: number;
 }
 
@@ -20,52 +19,22 @@ const Div = styled.div`
   position: relative;
   width: 100%;
 
-  > .transition {
+  > div {
     height: 100%;
     position: absolute;
     width: 100%;
 
     &.push,
     &.pop {
-      // TODO: どうやって設定するか…
-      transition: 1000ms;
-    }
-
-    &.current {
-      top: 0;
-
-      &.push.do {
-        top: -100%;
-      }
-
-      &.pop.do {
-        top: 100%;
-      }
-    }
-
-    &.next {
-      &.push {
-        top: 100%;
-
-        &.do {
-          top: 0;
-        }
-      }
-
-      &.pop {
-        top: -100%;
-
-        &.do {
-          top: 0;
-        }
-      }
+      transition: ${({ duration }: SwitchProps) =>
+        duration === undefined ? 0 : duration}ms;
     }
   }
 `;
 
 const getCloneElement = ({ children, location, match }: SwitchProps) => {
   let computedMatch: match<{}> | null = null;
-  let child: React.ReactElement<{}> = <React.Fragment />;
+  let child: React.ReactElement<any> = <React.Fragment />;
 
   React.Children.forEach(children, element => {
     if (computedMatch !== null || !React.isValidElement(element)) {
@@ -79,12 +48,11 @@ const getCloneElement = ({ children, location, match }: SwitchProps) => {
   });
 
   return computedMatch
-    ? // TODO: 型が合ってない
-      React.cloneElement(child, { location, computedMatch })
+    ? React.cloneElement(child, { location, computedMatch })
     : null;
 };
 
-class Switch extends React.Component<SwitchProps, any> {
+class TransitionSwitch extends React.Component<SwitchProps, any> {
   constructor(props: SwitchProps) {
     super(props);
 
@@ -112,18 +80,23 @@ class Switch extends React.Component<SwitchProps, any> {
       },
       () => {
         setTimeout(() => {
-          $('.transition').addClass('do');
+          const { action, nextDom } = this.state;
 
-          setTimeout(() => {
-            $('.transition').removeClass('do');
-
-            this.setState({
-              action: '',
-              currentDom: this.state.nextDom,
-              nextDom: null
-            });
-          }, 1000);
-        }, 50); // TODO: なんとかしたい
+          this.setState(
+            {
+              action: `${action} do`
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  action: '',
+                  currentDom: nextDom,
+                  nextDom: null
+                });
+              }, duration === undefined ? 0 : duration);
+            }
+          );
+        }, 100); // HELP ME!: want to remove...
       }
     );
 
@@ -131,15 +104,16 @@ class Switch extends React.Component<SwitchProps, any> {
   }
 
   render() {
+    const { className, ...props } = this.props;
     const { action, currentDom, nextDom } = this.state;
 
     return (
-      <Div>
-        <div className={`transition next ${action}`}>{nextDom}</div>
-        <div className={`transition current ${action}`}>{currentDom}</div>
+      <Div {...props} className={`transition-switch ${className || ''}`}>
+        <div className={`next ${action}`}>{nextDom}</div>
+        <div className={`current ${action}`}>{currentDom}</div>
       </Div>
     );
   }
 }
 
-export default withRouter(Switch);
+export default withRouter(TransitionSwitch);
