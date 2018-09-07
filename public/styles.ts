@@ -14,11 +14,12 @@ const Dl = styled.dl`
   }
 
   dd {
-    width: 150px;
+    font-size: 14px;
+    width: 200px;
   }
 
   dt {
-    width: calc(100% - 150px);
+    width: calc(100% - 200px);
 
     &.fade .transition-switch {
       > .current {
@@ -99,6 +100,64 @@ const Dl = styled.dl`
 
         &.push,
         &.pop {
+          &.do {
+            left: 0;
+          }
+        }
+      }
+    }
+
+    &.vertical-cover .transition-switch {
+      > .current {
+        top: 0;
+
+        &.push.do {
+          top: -100%;
+        }
+
+        &.pop.do {
+          top: 100%;
+        }
+      }
+    }
+
+    &.horizontal-cover .transition-switch {
+      > .current {
+        left: 0;
+
+        &.push.do {
+          left: -100%;
+        }
+
+        &.pop.do {
+          left: 100%;
+        }
+      }
+    }
+
+    &.vertical-wrapper .transition-switch {
+      > .next {
+        top: 100%;
+
+        &.push,
+        &.pop {
+          z-index: 2;
+
+          &.do {
+            top: 0;
+          }
+        }
+      }
+    }
+
+    &.horizontal-wrapper .transition-switch {
+      > .next {
+        left: 100%;
+
+        &.push,
+        &.pop {
+          z-index: 2;
+
           &.do {
             left: 0;
           }
