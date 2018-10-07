@@ -108,7 +108,10 @@ class TransitionSwitch extends React.Component<SwitchProps, any> {
     const { action, currentDom, nextDom } = this.state;
 
     return (
-      <Div {...props} className={`transition-switch ${className || ''}`}>
+      <Div
+        {...props}
+        className={`transition-switch ${className || ''} ${action}`}
+      >
         <div className={`next ${action}`}>{nextDom}</div>
         <div className={`current ${action}`}>{currentDom}</div>
       </Div>
