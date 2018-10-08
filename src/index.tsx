@@ -5,7 +5,7 @@ import {
   RouteComponentProps,
   withRouter
 } from 'react-router-dom';
-import styled from 'styled-components';
+import Div from './styles';
 
 export interface SwitchProps extends RouteComponentProps<any> {
   children: React.ReactNode;
@@ -13,24 +13,11 @@ export interface SwitchProps extends RouteComponentProps<any> {
   duration?: number;
 }
 
-const Div = styled.div`
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-
-  > div {
-    height: 100%;
-    position: absolute;
-    width: 100%;
-
-    &.push,
-    &.pop {
-      transition: ${({ duration }: SwitchProps) =>
-        duration === undefined ? 0 : duration}ms;
-    }
-  }
-`;
+interface SwitchState {
+  action: string;
+  currentDom: React.ReactElement<any> | null;
+  nextDom: React.ReactElement<any> | null;
+}
 
 const getCloneElement = ({ children, location, match }: SwitchProps) => {
   let computedMatch: match<{}> | null = null;
@@ -52,10 +39,17 @@ const getCloneElement = ({ children, location, match }: SwitchProps) => {
     : null;
 };
 
-class TransitionSwitch extends React.Component<SwitchProps, any> {
+class TransitionSwitch extends React.Component<SwitchProps, SwitchState> {
+  refCurrent: React.RefObject<HTMLDivElement>;
+  refNext: React.RefObject<HTMLDivElement>;
+  refSwitch: React.RefObject<HTMLDivElement>;
+
   constructor(props: SwitchProps) {
     super(props);
 
+    this.refCurrent = React.createRef<HTMLDivElement>();
+    this.refNext = React.createRef<HTMLDivElement>();
+    this.refSwitch = React.createRef<HTMLDivElement>();
     this.state = {
       action: '',
       currentDom: getCloneElement(props),
@@ -64,43 +58,58 @@ class TransitionSwitch extends React.Component<SwitchProps, any> {
   }
 
   componentDidUpdate(prevProps: SwitchProps) {
-    if (prevProps.location.pathname === this.props.location.pathname) {
+    const {
+      location: { pathname: prevPathname }
+    } = prevProps;
+    const {
+      duration,
+      history: { action },
+      location: { pathname }
+    } = this.props;
+    const { action: stateAction, nextDom } = this.state;
+
+    if (prevPathname === pathname && stateAction === '') {
       return;
     }
 
-    const {
-      duration,
-      history: { action }
-    } = this.props;
-
-    this.setState(
-      {
+    if (prevPathname !== pathname) {
+      this.setState({
         action: action.toLowerCase(),
         nextDom: getCloneElement(this.props)
-      },
-      () => {
-        setTimeout(() => {
-          const { action, nextDom } = this.state;
+      });
 
-          this.setState(
-            {
-              action: `${action} do`
-            },
-            () => {
-              setTimeout(() => {
-                this.setState({
-                  action: '',
-                  currentDom: nextDom,
-                  nextDom: null
-                });
-              }, duration === undefined ? 0 : duration);
-            }
-          );
-        }, 100); // HELP ME!: want to remove...
-      }
-    );
+      return;
+    }
 
-    return;
+    if (!stateAction.includes('do')) {
+      setTimeout(() => {
+        this.refCurrent.current!.style.transitionDuration = duration
+          ? `${duration}ms`
+          : null;
+        this.refNext.current!.style.transitionDuration = duration
+          ? `${duration}ms`
+          : null;
+        this.refSwitch.current!.style.transitionDuration = duration
+          ? `${duration}ms`
+          : null;
+
+        this.setState({ action: `${stateAction} do` });
+      }, 250); // ここをなんとか…
+
+      return;
+    }
+
+    setTimeout(() => {
+      this.refCurrent.current!.style.transitionDuration = null;
+      this.refNext.current!.style.transitionDuration = null;
+      this.refSwitch.current!.style.transitionDuration = null;
+
+      this.setState({
+        action: '',
+        currentDom: nextDom,
+        nextDom: null
+      });
+    }, duration || 0);
   }
 
   render() {
@@ -111,9 +120,14 @@ class TransitionSwitch extends React.Component<SwitchProps, any> {
       <Div
         {...props}
         className={`transition-switch ${className || ''} ${action}`}
+        innerRef={this.refSwitch}
       >
-        <div className={`next ${action}`}>{nextDom}</div>
-        <div className={`current ${action}`}>{currentDom}</div>
+        <div className={`next ${action}`} ref={this.refNext}>
+          {nextDom}
+        </div>
+        <div className={`current ${action}`} ref={this.refCurrent}>
+          {currentDom}
+        </div>
       </Div>
     );
   }
