@@ -1,82 +1,37 @@
 # react-router-dom-transition
 
-[`react-router-dom-transition`](https://www.npmjs.com/package/react-router-dom-transition) uses [`react-router-dom`](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom) to enable transition.
+> Route transition effects for react-router-dom (v5).
 
-## install
+[🔗 npm](https://www.npmjs.com/package/react-router-dom-transition)
 
-`npm i --save react-router-dom-transition`
+## 📦 Install
 
-## usage
+```bash
+npm install react-router-dom-transition
+```
 
-``` js
-import { BrowserRouter, Route } from 'react-router-dom';
-import TransitionSwitch from 'react-router-dom-transition';
+## 🚀 Usage
 
-render() {
+```tsx
+import { BrowserRouter, Route } from "react-router-dom";
+import Transition from "react-router-dom-transition";
+
+function App() {
   return (
     <BrowserRouter>
-      /* replace with Switch of react-router-dom */
-      <TransitionSwitch duration={300}>
-        <Route component="Top" path="/" />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/about" component={About} />
-      </TransitionSwitch>
+      <Transition>
+        <Route path="/" component={Home} />
+        <Route path="/about" component={About} />
+      </Transition>
     </BrowserRouter>
   );
 }
-
 ```
 
-## example
+## 📌 Status
 
-[react-router-dom-transition](https://piro0919.github.io/react-router-dom-transition/)
+This package targets `react-router-dom` v5 and is no longer under active development. For modern React Router (v6+), see [the official transition docs](https://reactrouter.com/).
 
-## props
+## 📄 License
 
-- children: Route Components from react-router-dom
-- className?: To be added to parent dom
-- duration: duration time(ms)
-
-## classNames
-
-- transition-switch: parent dom
-- current: wrapper dom of current route component
-- next: wrapper dom of next route component
-- push: wrapper doms of route components at PUSH
-- pop: wrapper doms of route components at POP
-- do: wrapper doms of route components at transition start
-
-## style example
-
-``` css
-.transition-switch {
-  > .current {
-    top: 0;
-
-    &.push.do {
-      top: -100%;
-    }
-
-    &.pop.do {
-      top: 100%;
-    }
-  }
-
-  > .next {
-    &.push {
-      top: 100%;
-    }
-
-    &.pop {
-      top: -100%;
-    }
-
-    &.push,
-    &.pop {
-      &.do {
-        top: 0;
-      }
-    }
-  }
-}
-```
+MIT
