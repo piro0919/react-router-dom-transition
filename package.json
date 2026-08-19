@@ -1,6 +1,6 @@
 {
   "name": "react-router-dom-transition",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Headless route transition wrapper for React Router v6/v7 with dual-layer rendering and CSS-driven animations.",
   "keywords": [
     "react",
