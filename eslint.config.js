@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import magicNumbers from "@piro0919/eslint-config";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsparser from "@typescript-eslint/parser";
 import react from "eslint-plugin-react";
@@ -44,5 +45,7 @@ export default [
       "react/prop-types": "off",
     },
   },
+  // 名前の無い数字を警告する（全リポジトリで共有する piro0919/eslint-config）
+  ...magicNumbers({ files: ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"] }),
   { ignores: ["dist/**", "node_modules/**", "coverage/**", ".next/**", "next-env.d.ts"] },
 ];
